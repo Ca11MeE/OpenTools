@@ -890,7 +890,7 @@
         .layui-layer-imgtit a {
             max-width: 65%;
             overflow: hidden;
-            color: #fff
+            color: #ffffff
         }
 
         .layui-layer-imgtit a:hover {
@@ -2359,7 +2359,7 @@
                 } catch (e) {
 
                 }
-                var demo = !/^[0-9]+$/.test(jsonobji) && $.isEmptyObject(jsonobji) ? '<tr><td ondblclick="execClick();" oncopy="execCopy(event,this);">' + i + '</td><td>null</td></tr>' : '<tr><td ondblclick="execClick();" oncopy="execCopy(event,this);">' + i + '</td><td ondblclick="execClick();" oncopy="execCopy(event,this);">' + jsonobji + '</td></tr>';
+                var demo = !/^[0-9]+$/.test(jsonobji) && $.isEmptyObject(jsonobji) ? '<tr><td ondblclick="execClick();" oncopy="execCopy(event,this);">' + i + '</td><td style="background-color:#888888;">null</td></tr>' : '<tr><td ondblclick="execClick();" oncopy="execCopy(event,this);">' + i + '</td><td ondblclick="execClick();" oncopy="execCopy(event,this);">' + jsonobji + '</td></tr>';
                 var oobj;
 
                 try {
@@ -2428,8 +2428,9 @@
             }
 
             //定义动作
-            showTips=function () {
+            showTips = function () {
                 if ('none' != $('#preview').css('display')) {
+                    console.log($('#item-detail').css('width'))
                     $('#item-detail').html($(this).html());
                     $('#item-detail').css({
                         'left': mouse_x,
@@ -2445,11 +2446,25 @@
                     // layer.closeAll();
                 }
             }
+
+            clearTips = function () {
+                $('#item-detail').html('');
+                $('#item-detail').css({
+                    'left': '100%'
+                });
+            }
+
             //处理动作
             $('td').each(function () {
-                $(this).hover(showTips);
-                $(this).mouseenter(showTips);
-                $(this).mousemove(showTips);
+                if ('null' != $(this).html()) {
+                    $(this).hover(showTips);
+                    $(this).mouseenter(showTips);
+                    $(this).mousemove(showTips);
+                } else {
+                    $(this).hover(clearTips);
+                    $(this).mouseenter(clearTips);
+                    $(this).mousemove(clearTips);
+                }
             });
         }
         function hideresult() {
@@ -2484,7 +2499,15 @@
             });
             $('#txtJsonStr').mousemove(function () {
                 $('#item-detail').html('');
-                // layer.closeAll();
+                $('#item-detail').css({
+                    'left': '100%'
+                });
+            });
+            $('#txtJsonStr').mouseenter(function () {
+                $('#item-detail').html('');
+                $('#item-detail').css({
+                    'left': '100%'
+                });
             });
             document.onmousemove = function (ev) {
                 var oEvent = ev || event;
@@ -2515,7 +2538,7 @@
         </table>
     </div>
 
-    <span id="item-detail" style="position:absolute;background-color:#000000;font-size:22px;color:#ffffff;"></span>
+    <span id="item-detail" style="position:absolute;background-color:#000000;font-size:22px;color:#ffffff;padding:15px;"></span>
 </body>
 
 </html>
