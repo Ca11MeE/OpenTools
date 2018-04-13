@@ -915,16 +915,18 @@
         function showResultTip(msg) {
             $('#result-notice').html(msg);
             var height = $('#result-notice').css('height').replace(/px/, '');
-            $('#result-notice').css('top', (0 - height) + 'px');
+            $('#result-notice').css({'top': (0 - height) + 'px','opacity':0});
             $('#result-notice').animate({
-                'top': height + 'px',
-                'background-color':'#000000'
+                'top': '0px',
+                'opacity':'1'
             }, 1000, function () {
                 setTimeout(function () {
                     $('#result-notice').animate({
                         'top': (0 - height) + 'px',
-                        'background-color':'initial'
-                    }, 1000);
+                        'opacity':'0'
+                    }, 1000,function(){
+                        $('#result-notice').html('msg');
+                    });
                 }, 1000);
 
             });
@@ -1189,7 +1191,7 @@
 </head>
 
 <body style="background:#e6e6e6;">
-    <div id='result-notice' style="display:inline-block;width:100%;text-align:center;font-size:24px;position:fixed;top:0px;z-index:5;"></div>
+    <div id='result-notice' style="display:inline-block;width:100%;text-align:center;font-size:24px;position:fixed;top:0px;z-index:5;background-color:#000000;color:white;"></div>
     <button id='showresult' class="btn" onclick="change_result_view()" style="position:fixed;bottom:0px;width:100%;height:4%;font-size:24px;">查看数据结构表格</button>
     <textarea id="txtJsonStr" oninput="myParse()" style="position:fixed;width:100%;height:96%;font-size:16px;"></textarea>
     <div id="preview" style="display:none;position:fixed;float:right;width:100%;height:96%; border:0.5px solid #315;background:#e6e6e6;overflow-y:auto;">
